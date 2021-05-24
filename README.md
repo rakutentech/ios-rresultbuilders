@@ -229,8 +229,8 @@ Distributed under the MIT license. See  [LICENSE][license-url] for more informat
 [swift-image]: https://img.shields.io/badge/Swift-5.4%2B-orange
 [swift-url]: https://swift.org/
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
-[license-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/main/LICENSE
-[contiribute-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/main/CONTRIBUTING.md
+[license-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/master/LICENSE
+[contiribute-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/master/CONTRIBUTING.md
 [pod-image]: https://img.shields.io/badge/pod-v1.0.0-blue
 [platform-image]: https://img.shields.io/badge/Platform-iOS11.0%2B%20%7C%20macOS%2010.11%2B%20%7C%20watchOS%204.0%2B-orange
 [xcode-image]: https://img.shields.io/badge/Xcode-12.5+-blue.svg
