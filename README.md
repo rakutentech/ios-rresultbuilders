@@ -1,13 +1,14 @@
 # RResultBuilders
+
+![Build][bitrise-build-status]
 [![Swift Version][swift-image]][swift-url]
 [![License][license-image]][license-url]
 [![CocoaPods Compatible][pod-image]]()  
 [![Swift Package Manager][spm-image]]()
 ![Xcode][xcode-image]
 [![Platform][platform-image]]()
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-``RResultBuilder`` is DSL library written in swift which is made easy by [Result Builder](https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md)
+``RResultBuilder`` is DSL library based on [Result Builder](https://github.com/apple/swift-evolution/blob/main/proposals/0289-result-builders.md)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -212,7 +213,7 @@ UIAlertController(
 
 ## <a name="example" /> Example
 
-- Open and Run the project inside Example folder and find various user cases
+- Open and Run the project inside Example folder and find various use cases
 
 
 ## <a name="contribute" /> Contribute
@@ -228,12 +229,13 @@ Distributed under the MIT license. See  [LICENSE][license-url] for more informat
 [swift-image]: https://img.shields.io/badge/Swift-5.4%2B-orange
 [swift-url]: https://swift.org/
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
-[license-url]: https://github.com/rakutentech/ios-rresultbuilders/repos/RResultBuilders/browse/LICENSE
-[contiribute-url]: https://github.com/rakutentech/ios-rresultbuilders/repos/RResultBuilders/browse/CONTRIBUTING.md
+[license-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/main/LICENSE
+[contiribute-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/main/CONTRIBUTING.md
 [pod-image]: https://img.shields.io/badge/pod-v1.0.0-blue
-[platform-image]: https://img.shields.io/badge/Platform-iOS11.0%2B%20%7C%20macOS%2010.11%2B-orange
+[platform-image]: https://img.shields.io/badge/Platform-iOS11.0%2B%20%7C%20macOS%2010.11%2B%20%7C%20watchOS%204.0%2B-orange
 [xcode-image]: https://img.shields.io/badge/Xcode-12.5+-blue.svg
 [spm-image]: https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg
+[bitrise-build-status]: https://app.bitrise.io/app/bb96d52540c9e3ea.svg?token=yt1Mv147hXKe4v9FznfLNQ&branch=master
 
 
 

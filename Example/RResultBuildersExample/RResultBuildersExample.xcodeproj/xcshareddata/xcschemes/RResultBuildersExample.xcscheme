@@ -39,13 +39,23 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "75ADC636255BB66400E94CC8"
                BuildableName = "RResultBuildersExampleUITests.xctest"
                BlueprintName = "RResultBuildersExampleUITests"
                ReferencedContainer = "container:RResultBuildersExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "RResultBuildersTests"
+               BuildableName = "RResultBuildersTests"
+               BlueprintName = "RResultBuildersTests"
+               ReferencedContainer = "container:../..">
             </BuildableReference>
          </TestableReference>
       </Testables>
