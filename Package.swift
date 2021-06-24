@@ -10,7 +10,13 @@ let package = Package(
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "RResultBuilders",
-            targets: ["RResultBuilders"]),
+            type: .dynamic,
+            targets: ["RResultBuilders"]
+        ),
+        .library(
+            name: "RResultBuildersStatic",
+            targets: ["RResultBuilders"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
