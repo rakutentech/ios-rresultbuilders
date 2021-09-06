@@ -5,6 +5,22 @@
 //  Created by Mahadevaiah, Pavan | Pavan | ECMPD on 2021/09/01.
 //
 
+
+/**
+Request<Type> {
+    URL(string: "https://jsonplaceholder.typicode.com/todo")!
+    Header.Accept(.json)
+}
+.onData { data in
+    ...
+}
+.onError { error in
+    ...
+}
+.resume()
+*/
+
+
 import XCTest
 @testable import RResultBuilders
 
@@ -16,13 +32,15 @@ final class RequestBuilderTests: XCTestCase {
     }
     
     func testBasicDataRequest() {
-        verifyRequest(DataRequest {
-            URL {
-                RURLComponent(scheme: .https)
-                RURLComponent(host: "jsonplaceholder.typicode.com")
-                RURLComponent(path: "todos")
-            }!
-        })
+        verifyRequest(
+            DataRequest {
+                URL {
+                    Scheme(.https)
+                    Host("jsonplaceholder.typicode.com")
+                    Path("todos")
+                }!
+            }
+        )
     }
     
     func testDataRequestWithControlStatements() {
@@ -77,7 +95,7 @@ final class RequestBuilderTests: XCTestCase {
     func testRawResponse() {
         let expectation = self.expectation(description: #function)
         var rawResponse: (Data?, URLResponse?, Error?)? = nil
-        
+                
         DataRequest {
             URL(string: "https://jsonplaceholder.typicode.com/todos")!
         }

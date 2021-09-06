@@ -11,8 +11,7 @@ import Foundation
 public struct Headers: RequestParameter {
     private var rootParameter: RequestParameter?
     private var customHeaders: [String: String]?
-    
-    
+        
     /// Initialer that combines all `Header` parameter into one
     public init(@RRequestBuilder builder: () -> RequestParameter) {
         rootParameter = builder()

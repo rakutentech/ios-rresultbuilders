@@ -21,8 +21,9 @@
 ## <a name="features" /> Features
 
 - Supports
-    - `NSAttributedString`
-    - `UIAlertController`
+    - [`NSAttributedString`](#NSAttributedString)
+    - [`UIAlertController`](#UIAlertController)
+    - [`Request`](#Request)
 - DSL way defining attributed string
 - Building attributed strings is type safe
 - DSL way of constructing ActionSheet, AlertController
@@ -58,9 +59,7 @@ Open your project in Xcode 11, navigate to Menu -> Swift Packages -> Add Package
 .package('https://github.com/rakutentech/ios-rresultbuilders', from: 1.0.0)
 ```
 
-## <a name="usage" /> Usage
-
-### Attributed string
+## <a name="AttributedString" /> NSAttributedString
 Following components that helps in building attributed string in easy way
 - **RText**: This component used to construct attributed text from given string
 - **RLink**: This component used to construct link in attributed text
@@ -128,7 +127,7 @@ NSAttributedString {
 .font(.boldSystemFont(ofSize: 40))
 ```
 
-### Alert / Actionsheet
+## <a name="UIAlertController" /> UIAlertController
 There are dedicated actions those can be used to construct alert or action sheet
 - **DefaultAction**: This action is default type with `UIAlertAction.Style` as default
 - **CancelAction**: This action is cancel type with `UIAlertAction.Style` as cancel
@@ -203,6 +202,151 @@ UIAlertController(
         action
     }
 }
+```
+
+## <a name="Request" /> Request
+Making API call in declarative is fairly simple
+### DSL
+```swift
+Request<Type> {
+    URL("https://jsonplaceholder.typicode.com/todo")
+}
+.onObject { object in
+...
+}
+.resume()
+```
+
+### Data Request
+To get raw data as response
+```swift
+Request<Type> {
+    URL("https://jsonplaceholder.typicode.com/todo")
+}
+.onData { data in
+...
+}
+.onError { err in
+...
+}
+.resume()
+```
+
+### Callback handler
+Following snippet shows all possible handlers you can attach to Request but they are completely optional execept `resume`
+```swift
+Request<[Todo]> {
+    URL(string: "https://jsonplaceholder.typicode.com/todos")!
+}
+.onRawResponse { (data, response, error) in
+    ...
+}
+.onData { data in
+    ...
+}
+.onObject { todos in
+    ...
+}
+.onError { err in
+    ...
+}
+.resume()
+```
+
+### Request Components
+##### URL
+URL can also be build in DSL way
+```swift
+URL {
+    Scheme(.https)
+    Host("jsonplaceholder.typicode.com")
+    Path("todo")            
+}
+```
+##### Header
+Supports standard HTTP headers
+```swift
+Header.Accept(.json)
+Header.Authorization(.basic(username: "username", password: "password"))
+Header.CacheControl(.noCache)
+Header.ContentLength(16)
+Header.ContentType(.xml)
+Header.Host(jsonplaceholder.typicode.com", port: "8000")
+Header.Origin("jsonplaceholder.typicode.com")
+Header.Referer("jsonplaceholder.typicode.com")
+Header.UserAgent("user-agent")
+Header.Custom("custom", value: "customvVal")
+```
+It also supports building Headers in DSL
+```swift
+Headers {
+    Header.Accept(.json)
+    Header.Authorization(.basic(username: "test", password: "rest"))
+    Header.CacheControl(.noCache)
+}
+```
+
+##### HTTP Body
+```swift
+RequestBody(sampleTodo)
+```
+Raw Data
+```swift
+RequestBody(data)
+```
+
+##### HTTP Method
+```swift
+Method.GET
+Method.POST
+Method.HEAD
+Method.PUT
+Method.DELETE
+```
+
+##### Timeout
+```swift
+Timeout(30) // seconds
+```
+
+##### Decoding
+You can even specify custom decoder 
+```swift
+Request<[Todo]> {
+    URL(string: "https://jsonplaceholder.typicode.com/todos")!
+}
+.onObject(using: JSONDecoder()) { todos in
+    ...
+}
+.resume()
+```
+
+Also raw data can be decoded
+```swift
+DataRequest {
+    URL(string: "https://jsonplaceholder.typicode.com/todos")!
+}
+..onData { data in
+    data?.decoded()
+    // Custom decoder
+    // data?.decoded(using: JSONDecoder())
+}
+.resume()
+```
+
+##### URLRequest
+It also generates raw URLRequest
+```swift
+DataRequest {
+    URL(string: "https://jsonplaceholder.typicode.com/todos")!
+    Method.GET
+    CachePolicy(.reloadIgnoringLocalCacheData)
+    Headers {
+        Header.Accept(.json)
+        Header.Authorization(.basic(username: "test", password: "rest"))
+        Header.CacheControl(.noCache)
+    }
+}.asURLRequest()
 ```
 
 ## <a name="screenshot" /> Screenshot

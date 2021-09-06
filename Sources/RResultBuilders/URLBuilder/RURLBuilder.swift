@@ -4,14 +4,14 @@ import Foundation
 public struct RURLBuilder {
     /// Required by every result builder to build combined results from
     /// statement blocks.
-    public static func buildBlock(_ components: RURLComponent...) -> RURLComponent {
-        return resolveComponents(components)
+    public static func buildBlock(_ components: URLComponent...) -> URLComponent {
+        CombinedComponent(components)
     }
     
     /// If declared, provides contextual type information for statement
     /// expressions to translate them into partial results.
-    public static func buildExpression(_ expression: RURLComponent) -> RURLComponent {
-        return expression
+    public static func buildExpression(_ expression: URLComponent) -> URLComponent {
+        expression
     }
     
     public static func buildExpression(_ staticString: StaticString) -> URL? {
@@ -19,60 +19,39 @@ public struct RURLBuilder {
     }
     
     /// Enables support for `if` statements that do not have an `else`.
-    public static func buildOptional(_ component: RURLComponent?) -> RURLComponent {
-        return component ?? RURLComponent()
+    public static func buildOptional(_ component: URLComponent?) -> URLComponent {
+        component ?? EmptyComponent()
     }
     
     /// With buildEither(second:), enables support for 'if-else' and 'switch'
     /// statements by folding conditional results into a single result.
-    public static func buildEither(first: RURLComponent) -> RURLComponent {
-        return first
+    public static func buildEither(first: URLComponent) -> URLComponent {
+        first
     }
     
     /// With buildEither(second:), enables support for 'if-else' and 'switch'
     /// statements by folding conditional results into a single result.
-    public static func buildEither(second: RURLComponent) -> RURLComponent {
-        return second
+    public static func buildEither(second: URLComponent) -> URLComponent {
+        second
     }
     
     /// Enables support for 'for..in' loops by combining the
     /// results of all iterations into a single result.
-    public static func buildArray(_ components: [RURLComponent]) -> RURLComponent {        
-        return resolveComponents(components)
-    }
-    
-    private static func resolveComponents(_ components: [RURLComponent]) -> RURLComponent {
-        var urlComponents = URLComponents()
-        
-        for component in components {
-            if let scheme = component.components.scheme {
-                urlComponents.scheme = scheme
-            }
-            
-            if let host = component.components.host {
-                urlComponents.host = host
-            }
-            
-            if !component.components.path.isEmpty {
-                urlComponents.path += component.components.path
-            }
-            
-            if let queryItems = component.components.queryItems, !queryItems.isEmpty {
-                urlComponents.queryItems = queryItems
-            }
-        }
-        
-        return RURLComponent(components: urlComponents)
+    public static func buildArray(_ components: [URLComponent]) -> URLComponent {
+        CombinedComponent(components)
     }
 }
 
 // MARK: - URL
 public extension URL {
     /// Custom initializer that constructs URL using result builder
-    init?(@RURLBuilder _ build: () -> RURLComponent) {
+    init?(@RURLBuilder _ build: () -> URLComponent) {
         //Get URL from components here
-        let builtComponent = build()
-        if let url = builtComponent.components.url {
+        let combinedComponent = build()
+        var urlComponents = URLComponents()
+        combinedComponent.build(&urlComponents)
+        
+        if let url = urlComponents.url {
             self = url
         } else {
             return nil

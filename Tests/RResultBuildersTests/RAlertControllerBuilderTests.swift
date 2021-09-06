@@ -4,7 +4,7 @@
 //
 
 
-#if !os(watchOS)
+#if os(iOS)
 import XCTest
 @testable import RResultBuilders
 

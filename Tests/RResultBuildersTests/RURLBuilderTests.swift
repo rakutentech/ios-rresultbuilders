@@ -12,9 +12,9 @@ import XCTest
 final class RURLBuilderTests: XCTestCase {
     func testBasicURL() {
         let url = URL {
-            RURLComponent(scheme: .https)
-            RURLComponent(host: "rakuten.co.jp")
-            RURLComponent(path: "item/shop")
+            Scheme(.https)
+            Host("rakuten.co.jp")
+            Path("item/shop")            
         }
         
         XCTAssertEqual(url!.absoluteString, "https://rakuten.co.jp/item/shop")
@@ -22,10 +22,10 @@ final class RURLBuilderTests: XCTestCase {
     
     func testURLWithQuery() {
         let url = URL {
-            RURLComponent(scheme: .https)
-            RURLComponent(host: "rakuten.co.jp")
-            RURLComponent(path: "item/shop")
-            RURLComponent(query: "q", value: "123")
+            Scheme(.https)
+            Host("rakuten.co.jp")
+            Path("item/shop")
+            Query(query: "q", value: "123")
         }
         
         XCTAssertEqual(url!.absoluteString, "https://rakuten.co.jp/item/shop?q=123")
@@ -34,10 +34,10 @@ final class RURLBuilderTests: XCTestCase {
     func testURLWithQueries() {
         let queryParameters = ["q": 123]
         let url = URL {
-            RURLComponent(scheme: .https)
-            RURLComponent(host: "rakuten.co.jp")
-            RURLComponent(path: "item/shop")
-            RURLComponent(queryPrameters: queryParameters)
+            Scheme(.https)
+            Host("rakuten.co.jp")
+            Path("item/shop")
+            Query(queryPrameters: queryParameters)
         }
         
         XCTAssertEqual(url!.absoluteString, "https://rakuten.co.jp/item/shop?q=123")
@@ -46,11 +46,11 @@ final class RURLBuilderTests: XCTestCase {
     func testURLWithOptionalQuery() {
         let queryParameters: [String: Int]? = ["q": 123]
         let url = URL {
-            RURLComponent(scheme: .https)
-            RURLComponent(host: "rakuten.co.jp")
-            RURLComponent(path: "item/shop")
+            Scheme(.https)
+            Host("rakuten.co.jp")
+            Path("item/shop")
             if let params = queryParameters {
-                RURLComponent(queryPrameters: params)
+                Query(queryPrameters: params)
             }
         }
         
@@ -61,18 +61,18 @@ final class RURLBuilderTests: XCTestCase {
         let a = "Apple"
         
         let url = URL {
-            RURLComponent(scheme: .https)
-            RURLComponent(host: "rakuten.co.jp")
-            RURLComponent(path: "item/shop")
+            Scheme(.https)
+            Host("rakuten.co.jp")
+            Path("item/shop")
             switch a {
             case "Apple":
-                RURLComponent(path: "apple")
+                Path("apple")
             default:
-                RURLComponent()
+                EmptyComponent()
             }
             
             if 4 % 2 == 0 {
-                RURLComponent(query: "isEven", value: "true")
+                Query(query: "isEven", value: "true")
             }
         }
         
@@ -82,10 +82,10 @@ final class RURLBuilderTests: XCTestCase {
     func testURLWithLoop() {
         let paths = ["path1", "path2", "path3"]
         let url = URL {
-            RURLComponent(scheme: .https)
-            RURLComponent(host: "rakuten.co.jp")
+            Scheme(.https)
+            Host("rakuten.co.jp")
             for p in paths {
-                RURLComponent(path: p)
+                Path(p)
             }
         }
         

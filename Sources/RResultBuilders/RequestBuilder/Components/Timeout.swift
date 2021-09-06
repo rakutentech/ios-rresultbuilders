@@ -7,9 +7,11 @@
 
 import Foundation
 
+/// Injects timeout interval for request
 public struct Timeout: SessionParameter {
     private let timeout: TimeInterval
     
+    /// Initialize with timeout value
     public init(_ timeout: TimeInterval) {
         self.timeout = timeout
     }
