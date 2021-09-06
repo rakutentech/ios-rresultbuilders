@@ -18,18 +18,19 @@ class ViewController: UIViewController {
         stackView.alignment = .top
         
         // Render below examples
-        //        example1()
-        //        example2()
-        //        example3()
-        //        example4()
-        //        example5()
-        //        example6()
-        //        example7()
-        // huggingLabel()
+        example1()
+        example2()
+        example3()
+        example4()
+        example5()
+        example6()
+        example7()
+        huggingLabel()
         
-//        testDataAPICall()
+        // Request Builder
+        testDataAPICall()
         testObjectAPICall()
-//        buildURLRequest()
+        buildURLRequest()
     }
     
     // MARK: - Attributed string
@@ -363,17 +364,18 @@ extension ViewController {
     
     func testDataAPICall() {
         DataRequest {
-            URL(string: "https://jsonplaceholder.typicode.com/todos/1")!
+            URL {
+                Scheme(.https)
+                Host("jsonplaceholder.typicode.com")
+                Path("todos/1")
+            }!
             Method.GET
             Timeout(30)
-//            Headers {
-//                Header.Accept(.json)
-//                Header.Authorization(.basic(username: "test", password: "rest"))
-//                Header.CacheControl(.noCache)
-//                Header.ContentLength(40)
-//                Header.ContentType(.javascript)
-//                Header.UserAgent("apple")
-//            }
+            Headers {
+                Header.Accept(.json)
+                Header.Authorization(.basic(username: "test", password: "rest"))
+                Header.UserAgent("apple")
+            }
         }
         .onData { data in
             print("data: ", data!.debugDescription)
@@ -391,15 +393,6 @@ extension ViewController {
             URL(string: "https://jsonplaceholder.typicode.com/todos/1")!
             Method.GET
             Timeout(30)
-//            Headers {
-//                Header.Accept(.json)
-//                Header.Authorization(.basic(username: "test", password: "rest"))
-//                Header.CacheControl(.noCache)
-//                Header.ContentLength(40)
-//                Header.ContentType(.javascript)
-//                Header.UserAgent("apple")
-//
-//            }
         }
         .onObject { todo in
             print("todo: ", todo)

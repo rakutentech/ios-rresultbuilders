@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Host: URLComponent {
+public struct Host: URLComponent {
     private let host: String
     
     /// Initialize with custom host
@@ -16,7 +16,7 @@ struct Host: URLComponent {
         self.host = host
     }
     
-    func build(_ urlComponents: inout URLComponents) {
+    public func build(_ urlComponents: inout URLComponents) {
         urlComponents.host = host
     }
 }
