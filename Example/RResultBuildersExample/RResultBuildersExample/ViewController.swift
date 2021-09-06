@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "RResultBuilders"
-        // Do any additional setup after loading the view.        
+        // Do any additional setup after loading the view.
         stackView.distribution = .equalSpacing
         stackView.alignment = .top
         
@@ -25,8 +25,12 @@ class ViewController: UIViewController {
         example5()
         example6()
         example7()
-        
         huggingLabel()
+        
+        // Request Builder
+        testDataAPICall()
+        testObjectAPICall()
+        buildURLRequest()
     }
     
     // MARK: - Attributed string
@@ -42,7 +46,7 @@ class ViewController: UIViewController {
     private func example1() {
         let label = displayLabel
         
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let text = NSAttributedString {
             RText("This ")
             RText("is a ")
@@ -55,8 +59,8 @@ class ViewController: UIViewController {
             RText("string")
                 .foregroundColor(.orange)
         }
-        .font(.systemFont(ofSize: 30))
-//-----------------------------------------------------//
+            .font(.systemFont(ofSize: 30))
+        //-----------------------------------------------------//
         
         
         label.attributedText = text
@@ -66,7 +70,7 @@ class ViewController: UIViewController {
     private func example2() {
         let label = displayLabel
         
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let attributedString = NSAttributedString {
             RText("This")
                 .font(.boldSystemFont(ofSize: 30))
@@ -82,8 +86,8 @@ class ViewController: UIViewController {
                 .foregroundColor(.red)
             RText(" font")
         }
-        .font(.systemFont(ofSize: 30))
-//-----------------------------------------------------//
+            .font(.systemFont(ofSize: 30))
+        //-----------------------------------------------------//
         
         label.attributedText = attributedString
         stackView.addArrangedSubview(label)
@@ -92,31 +96,31 @@ class ViewController: UIViewController {
     private func example3() {
         let label = displayLabel
         
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let attributedString = NSAttributedString {
             RText("I love swift and SwiftUI ???")
                 .stroke(width: 2, color: .red)
         }
-        .font(.systemFont(ofSize: 40))
+            .font(.systemFont(ofSize: 40))
         
         label.attributedText = attributedString
         stackView.addArrangedSubview(label)
     }
-//-----------------------------------------------------//
+    //-----------------------------------------------------//
     
     private func example4() {
         let label = displayLabel
         
         let folderIcon = UIImage(systemName: "folder")!
             .withRenderingMode(.alwaysTemplate)
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let text = NSAttributedString {
             RText("Folder ")
             RImageAttachment(image: folderIcon, size: CGSize(width: 30, height: 30))
         }
-        .foregroundColor(.red)
-        .font(.systemFont(ofSize: 30))
- //-----------------------------------------------------//
+            .foregroundColor(.red)
+            .font(.systemFont(ofSize: 30))
+        //-----------------------------------------------------//
         
         label.attributedText = text
         stackView.addArrangedSubview(label)
@@ -127,7 +131,7 @@ class ViewController: UIViewController {
         
         // This is with control statements
         let shouldIDrinkCoffee = true
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let attributedString = NSAttributedString {
             RText("Is it coffee time?")
             RLineBreak(count: 1)
@@ -141,8 +145,8 @@ class ViewController: UIViewController {
                     .font(.boldSystemFont(ofSize: 30))
             }
         }
-        .font(.boldSystemFont(ofSize: 40))
-//-----------------------------------------------------//
+            .font(.boldSystemFont(ofSize: 40))
+        //-----------------------------------------------------//
         
         
         label.attributedText = attributedString
@@ -159,7 +163,7 @@ class ViewController: UIViewController {
         }
         
         let appleDevice = Apple.iPhone
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let attributedString = NSAttributedString {
             RText("Switch-Case ")
             switch appleDevice {
@@ -170,8 +174,8 @@ class ViewController: UIViewController {
                 RText("is Apple silicon")
             }
         }
-        .font(.boldSystemFont(ofSize: 40))
-//-----------------------------------------------------//
+            .font(.boldSystemFont(ofSize: 40))
+        //-----------------------------------------------------//
         
         label.attributedText = attributedString
         stackView.addArrangedSubview(label)
@@ -210,7 +214,7 @@ class ViewController: UIViewController {
         }
         
         let appleDevices = Apple.allCases
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let attributedString = NSAttributedString {
             for device in appleDevices {
                 RText(device.rawValue)
@@ -219,8 +223,8 @@ class ViewController: UIViewController {
                 RSpace()
             }
         }
-        .font(.boldSystemFont(ofSize: 40))
-//-----------------------------------------------------//
+            .font(.boldSystemFont(ofSize: 40))
+        //-----------------------------------------------------//
         
         label.attributedText = attributedString
         stackView.addArrangedSubview(label)
@@ -237,34 +241,34 @@ class ViewController: UIViewController {
     // MARK: - Alert/ActionSheet
     @IBAction func didPressShowAlert(_ sender: Any) {
         /// Toggle commenting one of the method to swtich betwen `alert` and `action sheet`
-//        showDSLAlert()
+        //        showDSLAlert()
         showDSLAlert1()
-//        showDSLActionSheet(sender: sender)
+        //        showDSLActionSheet(sender: sender)
     }
     
     private func showDSLAlert() {
         let optional: Int? = 2
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let alert = UIAlertController(
             title: "Delete all data?",
             message: "All your data will be deleted!") {
-            DestructiveAction("Yes, Delete it All") {
-                print("Deleting all data")
-            }
-            
-            DefaultAction("Show More Options") {
-                print("showing more options")
-            }
-            
-            CancelAction("No, Don't Delete Anything")
-            
-            if let opt = optional {
-                DefaultAction("Pick optional val: \(opt)") {
-                    print("selected optional value: \(opt)")
+                DestructiveAction("Yes, Delete it All") {
+                    print("Deleting all data")
+                }
+                
+                DefaultAction("Show More Options") {
+                    print("showing more options")
+                }
+                
+                CancelAction("No, Don't Delete Anything")
+                
+                if let opt = optional {
+                    DefaultAction("Pick optional val: \(opt)") {
+                        print("selected optional value: \(opt)")
+                    }
                 }
             }
-        }
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         
         present(alert, animated: true)
     }
@@ -280,16 +284,16 @@ class ViewController: UIViewController {
             },
             CancelAction("No, Don't Delete Anything")
         ]
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         // Using loop
         let alert = UIAlertController(
             title: "Delete all data?",
             message: "All your data will be deleted!") {
-            for action in actions {
-                action
+                for action in actions {
+                    action
+                }
             }
-        }
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         
         present(alert, animated: true)
     }
@@ -305,47 +309,118 @@ class ViewController: UIViewController {
         
         let appleDevice = Apple.iPhone
         
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         let alert = UIAlertController(
             title: "Delete all data?",
             message: "All your data will be deleted!",
             style: .actionSheet) {
-            DestructiveAction("Yes, Delete it All") {
-                print("Deleting all data")
-            }
-            
-            DefaultAction("Show More Options") {
-                print("selected more options")
-            }
-            
-            CancelAction("No, Don't Delete Anything")
-            
-            switch appleDevice {
-            case .iPhone:
-                DefaultAction("Switch-Case is iPhone") {
-                    print("selected iPhone")
+                DestructiveAction("Yes, Delete it All") {
+                    print("Deleting all data")
                 }
-            case .mac:
-                DefaultAction("Switch-Case is mac") {
-                    print("selected mac")
+                
+                DefaultAction("Show More Options") {
+                    print("selected more options")
                 }
-            default:
-                DefaultAction("Switch-Case is AR glass") {
-                    print("selected AR glass")
+                
+                CancelAction("No, Don't Delete Anything")
+                
+                switch appleDevice {
+                case .iPhone:
+                    DefaultAction("Switch-Case is iPhone") {
+                        print("selected iPhone")
+                    }
+                case .mac:
+                    DefaultAction("Switch-Case is mac") {
+                        print("selected mac")
+                    }
+                default:
+                    DefaultAction("Switch-Case is AR glass") {
+                        print("selected AR glass")
+                    }
+                }
+                
+                if let opt = optional {
+                    DefaultAction("Pick optional val: \(opt)") {
+                        print("selected optional value: \(opt)")
+                    }
                 }
             }
-            
-            if let opt = optional {
-                DefaultAction("Pick optional val: \(opt)") {
-                    print("selected optional value: \(opt)")
-                }
-            }
-        }
-//-----------------------------------------------------//
+        //-----------------------------------------------------//
         
         alert.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
         alert.popoverPresentationController?.sourceView = self.view
         present(alert, animated: true)
+    }
+}
+
+// Request + URL
+extension ViewController {
+    struct Todo: Codable {
+        let userId: Int
+        let id: Int
+        let title: String
+        let completed: Bool
+    }
+    
+    func testDataAPICall() {
+        DataRequest {
+            URL {
+                Scheme(.https)
+                Host("jsonplaceholder.typicode.com")
+                Path("todos/1")
+            }!
+            Method.GET
+            Timeout(30)
+            Headers {
+                Header.Accept(.json)
+                Header.Authorization(.basic(username: "test", password: "rest"))
+                Header.UserAgent("apple")
+            }
+        }
+        .onData { data in
+            print("data: ", data!.debugDescription)
+            let todo: Todo = try! data!.decoded()
+            print("todo from data", todo)
+        }
+        .onError { error in
+            print("error", error)
+        }
+        .resume()
+    }
+    
+    func testObjectAPICall() {
+        Request<Todo> {
+            URL(string: "https://jsonplaceholder.typicode.com/todos/1")!
+            Method.GET
+            Timeout(30)
+        }
+        .onObject { todo in
+            print("todo: ", todo)
+        }
+        .onError { error in
+            print("error", error)
+        }
+        .resume()
+    }
+    
+    func buildURLRequest() {
+        let urlReq = DataRequest {
+            URL(string: "https://jsonplaceholder.typicode.com/todos/1")!
+            Method.GET
+            Timeout(30)
+            Headers {
+                Header.Accept(.json)
+                Header.Authorization(.basic(username: "test", password: "rest"))
+                Header.CacheControl(.noCache)
+                Header.ContentLength(40)
+                Header.ContentType(.javascript)
+                Header.UserAgent("apple")
+                Header.Custom("CustomKey", value: "Custom Value")
+                
+            }
+        }.asURLRequest()
+        
+        print("urlReq", urlReq)
     }
 }
 
