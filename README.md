@@ -212,7 +212,7 @@ Request<Type> {
     URL("https://jsonplaceholder.typicode.com/todo")
 }
 .onObject { object in
-...
+    ...
 }
 .resume()
 ```
@@ -224,16 +224,16 @@ Request<Type> {
     URL("https://jsonplaceholder.typicode.com/todo")
 }
 .onData { data in
-...
+    ...
 }
 .onError { err in
-...
+    ...
 }
 .resume()
 ```
 
 ### Callback handler
-Following snippet shows all possible handlers you can attach to Request but they are completely optional execept `resume`
+You can attach all possible handlers to Request but they are completely optional execept `resume`
 ```swift
 Request<[Todo]> {
     URL(string: "https://jsonplaceholder.typicode.com/todos")!
@@ -270,10 +270,8 @@ Header.Accept(.json)
 Header.Authorization(.basic(username: "username", password: "password"))
 Header.CacheControl(.noCache)
 Header.ContentLength(16)
-Header.ContentType(.xml)
+Header.ContentType(.json)
 Header.Host(jsonplaceholder.typicode.com", port: "8000")
-Header.Origin("jsonplaceholder.typicode.com")
-Header.Referer("jsonplaceholder.typicode.com")
 Header.UserAgent("user-agent")
 Header.Custom("custom", value: "customvVal")
 ```
@@ -287,12 +285,19 @@ Headers {
 ```
 
 ##### HTTP Body
+Custom Encodable Object
 ```swift
-RequestBody(sampleTodo)
+Request<Type> {
+    RequestBody(sampleTodo)
+}
+.resume()
 ```
 Raw Data
 ```swift
-RequestBody(data)
+Request<Type> {
+    RequestBody(data)
+}
+.resume()
 ```
 
 ##### HTTP Method
