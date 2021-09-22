@@ -15,7 +15,7 @@ public enum CacheType {
     case onlyIfCached
     case maxAge(seconds: Int)
     
-    var value: String {
+    public var value: String {
         switch self {
         case .noCache:
             return "no-cache"

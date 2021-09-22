@@ -12,7 +12,7 @@ public enum Auth {
     case bearer(token: String)
     case custom(name: String, token: String)
     
-    var value: String {
+    public var value: String {
         switch self {
         case .basic(let username, let password):
             let encodedInfo = Data("\(username):\(password)".utf8).base64EncodedString()

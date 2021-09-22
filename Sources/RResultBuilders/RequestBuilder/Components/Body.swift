@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RequestBody: RequestParameter {
+public struct RequestBody: RequestParameter {
     private let data: Data?
     
     /// Creates the `Body` from an `Encodable` type using `JSONEncoder`
@@ -21,7 +21,7 @@ struct RequestBody: RequestParameter {
         self.data = data
     }
     
-    func buildParameter(_ request: inout URLRequest) {
+    public func buildParameter(_ request: inout URLRequest) {
         request.httpBody = data
     }
 }

@@ -18,7 +18,7 @@ public enum MediaType: ExpressibleByStringLiteral {
     case javascript
     case custom(String)
     
-    var rawValue: String {
+    public var rawValue: String {
         switch self {
         case .json:
             return "application/json"
