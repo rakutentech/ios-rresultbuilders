@@ -3,7 +3,6 @@
 ![Build][bitrise-build-status]
 [![Swift Version][swift-image]][swift-url]
 [![License][license-image]][license-url]
-[![CocoaPods Compatible][pod-image]]()  
 [![Swift Package Manager][spm-image]]()
 ![Xcode][xcode-image]
 [![Platform][platform-image]]()
@@ -31,7 +30,7 @@
 - Supports control statements(including optional checking) within DSL body builder
 - Reduces boilerplate code
 - Fully tested code
-- Distribution with Swift Package Manager and CocoaPods
+- Distribution with Swift Package Manager
 
 ## <a name="requirements" /> Requirements
 
@@ -43,14 +42,6 @@
 
 ## <a name="installation" /> Installation
 
-#### CocoaPods
-You can use [CocoaPods](http://cocoapods.org/) to install `RResultBuilders` by adding it to your `Podfile`:
-
-```ruby
-platform :ios, '11.0'
-use_frameworks!
-pod 'RResultBuilders', '1.2.2'
-```
 
 #### Swift Package Manager
 Just add this dependency in `Package.swift`
