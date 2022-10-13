@@ -46,11 +46,8 @@ extension RAttributedComponent {
     /// - Returns: new  attributed component
     /// - warning: It's recommened to use one of the factory method instead of this just to ensure type safety of values
     public func apply(_ newAttributes: RAttributes, range: NSRange? = nil) -> RAttributedComponent {
-        let mas = NSMutableAttributedString(attributedString: attributedString)
-        let applyRange = range ?? NSMakeRange(0, mas.length)
-        mas.addAttributes(newAttributes, range: applyRange)
-        
-        return RText(mas)
+        let appliedAttribuedString = attributedString.applyAtrributesIfNotExist(newAttributes, range: range)
+        return RText(appliedAttribuedString)
     }    
 }
 

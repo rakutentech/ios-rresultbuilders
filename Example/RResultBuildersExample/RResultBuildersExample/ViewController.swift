@@ -53,13 +53,13 @@ class ViewController: UIViewController {
                 .foregroundColor(.darkGray)
             RText("colorful ")
                 .foregroundColor(.purple)
-                .font(.systemFont(ofSize: 28))
+                .font(.systemFont(ofSize: 28), range: NSMakeRange(0, 3))
             RText("attributed ")
                 .foregroundColor(.blue)
             RText("string")
                 .foregroundColor(.orange)
         }
-            .font(.systemFont(ofSize: 30))
+        .font(.systemFont(ofSize: 60))
         //-----------------------------------------------------//
         
         

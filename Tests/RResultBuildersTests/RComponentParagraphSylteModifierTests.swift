@@ -349,7 +349,7 @@ final class RAttributedComponentParagraphModifierTests: XCTestCase {
             return mas
         }()
         
-        let ps = NSParagraphStyle()
+        let ps = NSMutableParagraphStyle()
         
         let sut = NSAttributedString {
             RText("Hello world")

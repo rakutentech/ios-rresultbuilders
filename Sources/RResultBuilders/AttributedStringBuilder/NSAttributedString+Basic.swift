@@ -13,11 +13,12 @@ import AppKit
 
 /// - warning: These modifiers will be affected to all child if does not exist, suppose if child has exisiting attribute then that takes priority over this.
 extension NSAttributedString {
-    private func applyAtrributesIfNotExist(_ newAtrributes: RAttributes) -> NSAttributedString {
+    func applyAtrributesIfNotExist(_ newAtrributes: RAttributes, range: NSRange? = nil) -> NSAttributedString {
         let mas = NSMutableAttributedString(attributedString: self)
+        let resolvedRange = range ?? NSRange(location: 0, length: mas.length)
         
         // Convert into mutable attributed string and apply base modifiers if it does not exist in each attribute with range
-        mas.enumerateAttributes(in: NSRange(location: 0, length: mas.length)) { (attributes, range, stopEnumerating) in
+        mas.enumerateAttributes(in: resolvedRange) { (attributes, range, stopEnumerating) in
             var copiedAttributes = attributes
             for (k, v) in newAtrributes {
                 if copiedAttributes[k] == nil {
