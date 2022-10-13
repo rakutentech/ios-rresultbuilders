@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'RResultBuilders'
-    s.version          = '1.2.1'
+    s.version          = '1.2.2'
     s.summary          = 'RResultBuilders is a DSL library based on @resultBuilder'
     s.description      = <<-DESC
     RResultBuilders is available for iOS 11.0 and macOS 10.11, which makes building Attributed strings, alert and actionsheet is lot more easier than before in declarative way.

@@ -49,7 +49,7 @@ You can use [CocoaPods](http://cocoapods.org/) to install `RResultBuilders` by a
 ```ruby
 platform :ios, '11.0'
 use_frameworks!
-pod 'RResultBuilders', '1.0.0'
+pod 'RResultBuilders', '1.2.2'
 ```
 
 #### Swift Package Manager
