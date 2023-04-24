@@ -17,11 +17,11 @@ final class RAlertControllerBuilderTests: XCTestCase {
                 preferredStyle: .alert)
             
             let deleteAction = UIAlertAction(title: "Yes, Delete it All", style: .destructive) { (_) in
-                print("Deleting all data")
+                debugPrint("Deleting all data")
             }
             
             let moreOptionsAction = UIAlertAction(title: "Show More Options", style: .default) { (_) in
-                print("Show more options")
+                debugPrint("Show more options")
             }
             
             let cancelAction = UIAlertAction(title: "No, Don't Delete Anything", style: .cancel, handler: nil)
@@ -36,11 +36,11 @@ final class RAlertControllerBuilderTests: XCTestCase {
             title: "Delete all data?",
             message: "All your data will be deleted!") {
             DestructiveAction("Yes, Delete it All") {
-                print("Deleting all data")
+                debugPrint("Deleting all data")
             }
             
             DefaultAction("Show More Options") {
-                print("showing more options")
+                debugPrint("showing more options")
             }
             
             CancelAction("No, Don't Delete Anything")
@@ -60,11 +60,11 @@ final class RAlertControllerBuilderTests: XCTestCase {
                 preferredStyle: .actionSheet)
             
             let deleteAction = UIAlertAction(title: "Yes, Delete it All", style: .destructive) { (_) in
-                print("Deleting all data")
+                debugPrint("Deleting all data")
             }
             
             let moreOptionsAction = UIAlertAction(title: "Show More Options", style: .default) { (_) in
-                print("Show more options")
+                debugPrint("Show more options")
             }
             
             let cancelAction = UIAlertAction(title: "No, Don't Delete Anything", style: .cancel, handler: nil)
@@ -80,11 +80,11 @@ final class RAlertControllerBuilderTests: XCTestCase {
             message: "All your data will be deleted!",
             style: .actionSheet) {
             DestructiveAction("Yes, Delete it All") {
-                print("Deleting all data")
+                debugPrint("Deleting all data")
             }
             
             DefaultAction("Show More Options") {
-                print("showing more options")
+                debugPrint("showing more options")
             }
             
             CancelAction("No, Don't Delete Anything")

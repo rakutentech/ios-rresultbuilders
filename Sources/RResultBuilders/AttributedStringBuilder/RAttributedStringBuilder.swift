@@ -15,7 +15,6 @@ public struct RAttributedStringBuilder {
     /// Required by every result builder to build combined results from
     /// statement blocks.
     public static func buildBlock(_ components: RAttributedComponent...) -> RAttributedComponent {
-        print("buildBlock")
         let result = components.reduce(into: NSMutableAttributedString()) { $0.append($1.attributedString) }
         return RText(result)
     }
@@ -23,7 +22,6 @@ public struct RAttributedStringBuilder {
     /// If declared, provides contextual type information for statement
     /// expressions to translate them into partial results.
     public static func buildExpression(_ expression: RAttributedComponent) -> RAttributedComponent {
-        print("buildExpression.RAttributedComponent")
         return expression
     }
     
@@ -31,7 +29,6 @@ public struct RAttributedStringBuilder {
     /// expressions to translate them into partial results.
     #if !os(watchOS)    
     public static func buildExpression(_ expression: RImage) -> RAttributedComponent {
-        print("buildExpression.RImage")
         return RImageAttachment(image: expression)
     }
     #endif
@@ -42,26 +39,22 @@ public struct RAttributedStringBuilder {
     ///
     /// NOTE: If there is condition block in DSL body then output of `buildBlock{}` will be input to these methods,  hence type matching is mandatory beween `buildBlock.output -> buildEither.input`
     public static func buildEither(first: RAttributedComponent) -> RAttributedComponent {
-        print("buildEither.first")
         return first
     }
     
     /// With buildEither(second:), enables support for 'if-else' and 'switch'
     /// statements by folding conditional results into a single result.
     public static func buildEither(second: RAttributedComponent) -> RAttributedComponent {
-        print("buildEither.second")
         return second
     }
     
     /// Enables support for `if` statements that do not have an `else`.
     public static func buildOptional(_ component: RAttributedComponent?) -> RAttributedComponent {
-        print("buildOptional")
         return component ?? REmpty()
     }
     
     /// Enables support for `for..in` loop
     public static func buildArray(_ components: [RAttributedComponent]) -> RAttributedComponent {
-        print("buildArray")
         let result = components.reduce(into: NSMutableAttributedString()) { $0.append($1.attributedString) }
         return RText(result)
     }
