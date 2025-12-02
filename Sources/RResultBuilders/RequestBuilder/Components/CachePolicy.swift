@@ -1,8 +1,7 @@
 //
-//  File.swift
-//  File
+//  CachePolicy.swift
 //
-//  Created by Mahadevaiah, Pavan | Pavan | ECMPD on 2021/09/02.
+//  Created by Pavan on 2021/09/02.
 //
 
 import Foundation

@@ -1,14 +1,13 @@
 //
-//  File.swift
-//  File
+//  RError.swift
 //
-//  Created by Mahadevaiah, Pavan | Pavan | ECMPD on 2021/08/31.
+//  Created by Pavan on 2021/08/31.
 //
 
 import Foundation
 
 /// An error returned by the `Request`
-public enum RError {
+public enum RError: Error {
     /// Raw Http error from URLSession
     case raw(error: Error)
     /// Http status code error

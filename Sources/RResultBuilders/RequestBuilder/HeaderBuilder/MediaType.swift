@@ -1,13 +1,12 @@
 //
-//  File.swift
-//  File
+//  MediaType.swift
 //
-//  Created by Mahadevaiah, Pavan | Pavan | ECMPD on 2021/08/31.
+//  Created by Pavan on 2021/08/31.
 //
 
 import Foundation
 
-public enum MediaType: ExpressibleByStringLiteral {
+public enum MediaType: ExpressibleByStringLiteral, Sendable {
     public typealias StringLiteralType = String
     
     case json
