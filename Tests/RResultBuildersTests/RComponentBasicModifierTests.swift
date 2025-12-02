@@ -1,15 +1,24 @@
 //
 //  RComponentBasicModifierTests.swift
-//  
 //
 //
 
 #if !os(watchOS)
-import XCTest
+import Testing
+import Foundation
 @testable import RResultBuilders
 
-final class RComponentBasicModifierTests: XCTestCase {
-    func testModifyWithSingleAttribute() {
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+@Suite("NSAttributedString Basic Modifiers")
+struct RComponentBasicModifierTests {
+    
+    @Test("Single foreground color attribute can be applied")
+    func testModifyWithSingleAttribute() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
                                                 attributes: [.foregroundColor: RColor.yellow])
@@ -23,44 +32,52 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Foreground color should be applied correctly")
     }
     
-    func testModifyBackgroundColor() {
+    @Test("Background color can be modified", arguments: [
+        RColor.red,
+        RColor.blue,
+        RColor.green,
+        RColor.yellow
+    ])
+    func testModifyBackgroundColor(color: RColor) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.backgroundColor: RColor.red])
+                                                attributes: [.backgroundColor: color])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .backgroundColor(.red)
+                .backgroundColor(color)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Background color should be applied correctly")
     }
     
-    func testModifyBaselineOffset() {
+    @Test("Baseline offset can be modified", arguments: [0, 5, 10, -5, -10])
+    func testModifyBaselineOffset(offset: CGFloat) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.baselineOffset: 10])
+                                                attributes: [.baselineOffset: offset])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .baselineOffset(10)
+                .baselineOffset(offset)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Baseline offset of \(offset) should be applied correctly")
     }
     
-    func testModifyFontAndColor() {
+    @Test("Font and color can be modified together")
+    func testModifyFontAndColor() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "")
             mas.append(NSAttributedString(string: "Hello world",
@@ -82,44 +99,47 @@ final class RComponentBasicModifierTests: XCTestCase {
                 .font(.systemFont(ofSize: 24))
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Font and color should be applied correctly")
     }
     
-    func testModifyExpansion() {
+    @Test("Expansion can be modified", arguments: [0.0, 0.5, 1.0, -0.5])
+    func testModifyExpansion(expansion: CGFloat) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.expansion: 1])
+                                                attributes: [.expansion: expansion])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .expansion(1)
+                .expansion(expansion)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Expansion of \(expansion) should be applied correctly")
     }
     
-    func testModifyKerning() {
+    @Test("Kerning can be modified", arguments: [0, 1, 3, 5, -2])
+    func testModifyKerning(kerning: CGFloat) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.kern: 3])
+                                                attributes: [.kern: kerning])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .kerning(3)
+                .kerning(kerning)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Kerning of \(kerning) should be applied correctly")
     }
     
-    func testModifyLigature() {
+    @Test("Ligature can be disabled")
+    func testModifyLigature() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
                                                 attributes: [.ligature: 0])
@@ -133,27 +153,29 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Ligature should be disabled")
     }
     
-    func testModifyObliqueness() {
+    @Test("Obliqueness can be modified", arguments: [0.0, 0.5, 1.0, -0.5])
+    func testModifyObliqueness(obliqueness: Float) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.obliqueness: 0.5])
+                                                attributes: [.obliqueness: obliqueness])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .obliqueness(0.5)
+                .obliqueness(obliqueness)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Obliqueness of \(obliqueness) should be applied correctly")
     }
     
-    func testModifyShadow() {
+    @Test("Shadow can be applied")
+    func testModifyShadow() async throws {
         let testData: NSAttributedString = {
             let shadow = NSShadow()
             shadow.shadowColor = RColor.black
@@ -172,27 +194,33 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Shadow should be applied correctly")
     }
     
-    func testModifyStrikethrough() {
+    @Test("Strikethrough style can be applied", arguments: [
+        NSUnderlineStyle.single,
+        NSUnderlineStyle.double,
+        NSUnderlineStyle.thick
+    ])
+    func testModifyStrikethrough(style: NSUnderlineStyle) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.strikethroughStyle: NSUnderlineStyle.double.rawValue])
+                                                attributes: [.strikethroughStyle: style.rawValue])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .strikethrough(.double)
+                .strikethrough(style)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Strikethrough style \(style) should be applied correctly")
     }
     
-    func testModifyStrikethroughWithColor() {
+    @Test("Strikethrough with color can be applied")
+    func testModifyStrikethroughWithColor() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
                                                 attributes: [.strikethroughStyle: NSUnderlineStyle.patternDash.rawValue,
@@ -207,27 +235,29 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Strikethrough with color should be applied correctly")
     }
     
-    func testModifyStroke() {
+    @Test("Stroke width can be modified", arguments: [-3, -2, -1, 1, 2, 3])
+    func testModifyStroke(width: CGFloat) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.strokeWidth: -2])
+                                                attributes: [.strokeWidth: width])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .stroke(width: -2)
+                .stroke(width: width)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Stroke width of \(width) should be applied correctly")
     }
     
-    func testModifyStrokeWithColor() {
+    @Test("Stroke with color can be applied")
+    func testModifyStrokeWithColor() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
                                                 attributes: [.strokeWidth: -2,
@@ -242,10 +272,11 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Stroke with color should be applied correctly")
     }
     
-    func testModifyTextEffect() {
+    @Test("Text effect can be applied")
+    func testModifyTextEffect() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
                                                 attributes: [.textEffect: NSAttributedString.TextEffectStyle.letterpressStyle])
@@ -259,27 +290,34 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Text effect should be applied correctly")
     }
     
-    func testModifyUnderline() {
+    @Test("Underline style can be applied", arguments: [
+        NSUnderlineStyle.single,
+        NSUnderlineStyle.double,
+        NSUnderlineStyle.thick,
+        NSUnderlineStyle.patternDashDotDot
+    ])
+    func testModifyUnderline(style: NSUnderlineStyle) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.underlineStyle: NSUnderlineStyle.patternDashDotDot.rawValue])
+                                                attributes: [.underlineStyle: style.rawValue])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .underline(.patternDashDotDot)
+                .underline(style)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Underline style \(style) should be applied correctly")
     }
     
-    func testModifyUnderlineWithColor() {
+    @Test("Underline with color can be applied")
+    func testModifyUnderlineWithColor() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
                                                 attributes: [.underlineStyle: NSUnderlineStyle.patternDashDotDot.rawValue,
@@ -294,28 +332,33 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Underline with color should be applied correctly")
     }
     
-    func testModifyWritingDirection() {
+    @Test("Writing direction can be modified", arguments: [
+        NSWritingDirection.leftToRight,
+        NSWritingDirection.rightToLeft
+    ])
+    func testModifyWritingDirection(direction: NSWritingDirection) async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.writingDirection: NSWritingDirection.rightToLeft.rawValue])
+                                                attributes: [.writingDirection: direction.rawValue])
             mas.append(NSAttributedString(string: " with Swift"))
             return mas
         }()
         
         let sut = NSAttributedString {
             RText("Hello world")
-                .writingDirection(.rightToLeft)
+                .writingDirection(direction)
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Writing direction should be applied correctly")
     }
     
     #if canImport(AppKit)
-    func testModifyVertical() {
+    @Test("Vertical glyph form can be applied")
+    func testModifyVertical() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world",
                                                 attributes: [.verticalGlyphForm: 1])
@@ -329,11 +372,12 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "Vertical glyph form should be applied correctly")
     }
     #endif
     
-    func testChaining() {
+    @Test("All modifiers can be chained together")
+    func testChaining() async throws {
         let testData: NSAttributedString = {
             let shadow = NSShadow()
             shadow.shadowColor = RColor.black
@@ -383,7 +427,160 @@ final class RComponentBasicModifierTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(sut.isEqual(testData))
+        #expect(sut.isEqual(to: testData), "All chained modifiers should be applied correctly")
     }
 }
-#endif
+
+// MARK: - Edge Cases and Combinations
+@Suite("Basic Modifiers Edge Cases")
+struct BasicModifiersEdgeCaseTests {
+    
+    @Test("Zero values are handled correctly")
+    func testZeroValues() async throws {
+        let sut = NSAttributedString {
+            RText("Hello world")
+                .baselineOffset(0)
+                .kerning(0)
+                .expansion(0)
+                .obliqueness(0)
+        }
+        
+        let attributes = sut.attributes(at: 0, effectiveRange: nil)
+        #expect(attributes[.baselineOffset] as? Int == 0, "Zero baseline offset should be set")
+        #expect(attributes[.kern] as? Int == 0, "Zero kerning should be set")
+        #expect(attributes[.expansion] as? Float == 0, "Zero expansion should be set")
+        #expect(attributes[.obliqueness] as? Float == 0, "Zero obliqueness should be set")
+    }
+    
+    @Test("Negative values are handled correctly")
+    func testNegativeValues() async throws {
+        let sut = NSAttributedString {
+            RText("Hello world")
+                .baselineOffset(-10)
+                .kerning(-5)
+                .expansion(-0.5)
+                .obliqueness(-0.5)
+                .stroke(width: -2)
+        }
+        
+        let attributes = sut.attributes(at: 0, effectiveRange: nil)
+        #expect(attributes[.baselineOffset] as? Int == -10, "Negative baseline offset should be set")
+        #expect(attributes[.kern] as? Int == -5, "Negative kerning should be set")
+        #expect(attributes[.expansion] as? Float == -0.5, "Negative expansion should be set")
+        #expect(attributes[.obliqueness] as? Float == -0.5, "Negative obliqueness should be set")
+        #expect(attributes[.strokeWidth] as? Int == -2, "Negative stroke width should be set")
+    }
+    
+    @Test("Modifiers can be applied to empty text")
+    func testModifiersOnEmptyText() async throws {
+        let sut = NSAttributedString {
+            RText("")
+                .foregroundColor(.red)
+                .font(.systemFont(ofSize: 16))
+        }
+        
+        #expect(sut.string.isEmpty, "Text should be empty")
+        #expect(sut.length == 0, "Length should be zero")
+    }
+    
+    @Test("Different texts can have different modifiers")
+    func testDifferentModifiersOnDifferentTexts() async throws {
+        let sut = NSAttributedString {
+            RText("Red text")
+                .foregroundColor(.red)
+                .font(.systemFont(ofSize: 20))
+            RText("Blue text")
+                .foregroundColor(.blue)
+                .font(.systemFont(ofSize: 14))
+            RText("Green text")
+                .foregroundColor(.green)
+                .font(.boldSystemFont(ofSize: 18))
+        }
+        
+        // Verify first text
+        let firstAttributes = sut.attributes(at: 0, effectiveRange: nil)
+        #expect(firstAttributes[.foregroundColor] as? RColor == .red, "First text should be red")
+        
+        // Verify string contains all texts
+        #expect(sut.string.contains("Red text"), "Should contain first text")
+        #expect(sut.string.contains("Blue text"), "Should contain second text")
+        #expect(sut.string.contains("Green text"), "Should contain third text")
+    }
+    
+    @Test("Shadow with zero blur radius")
+    func testShadowWithZeroBlur() async throws {
+        let sut = NSAttributedString {
+            RText("Hello world")
+                .shadow(color: .black, radius: 0, x: 0, y: 0)
+        }
+        
+        let attributes = sut.attributes(at: 0, effectiveRange: nil)
+        let shadow = attributes[.shadow] as? NSShadow
+        #expect(shadow != nil, "Shadow should be set")
+        #expect(shadow?.shadowBlurRadius == 0, "Shadow blur radius should be zero")
+    }
+    
+    @Test("Multiple color-based modifiers can coexist")
+    func testMultipleColorModifiers() async throws {
+        let sut = NSAttributedString {
+            RText("Hello world")
+                .foregroundColor(.red)
+                .backgroundColor(.yellow)
+                .underline(.single, color: .blue)
+                .strikethrough(.single, color: .green)
+                .stroke(width: 1, color: .purple)
+        }
+        
+        let attributes = sut.attributes(at: 0, effectiveRange: nil)
+        #expect(attributes[.foregroundColor] as? RColor == .red, "Foreground color should be red")
+        #expect(attributes[.backgroundColor] as? RColor == .yellow, "Background color should be yellow")
+        #expect(attributes[.underlineColor] as? RColor == .blue, "Underline color should be blue")
+        #expect(attributes[.strikethroughColor] as? RColor == .green, "Strikethrough color should be green")
+        #expect(attributes[.strokeColor] as? RColor == .purple, "Stroke color should be purple")
+    }
+}
+
+// MARK: - Modifier Order Independence
+@Suite("Basic Modifiers Order Independence")
+struct BasicModifiersOrderTests {
+    
+    @Test("Modifier order does not affect result")
+    func testModifierOrderIndependence() async throws {
+        let sut1 = NSAttributedString {
+            RText("Hello world")
+                .foregroundColor(.red)
+                .backgroundColor(.yellow)
+                .font(.systemFont(ofSize: 16))
+                .kerning(2)
+        }
+        
+        let sut2 = NSAttributedString {
+            RText("Hello world")
+                .kerning(2)
+                .font(.systemFont(ofSize: 16))
+                .backgroundColor(.yellow)
+                .foregroundColor(.red)
+        }
+        
+        #expect(sut1.isEqual(to: sut2), "Different modifier orders should produce same result")
+    }
+    
+    @Test("Chaining order with underline and strikethrough")
+    func testUnderlineStrikethroughOrder() async throws {
+        let sut1 = NSAttributedString {
+            RText("Test")
+                .underline(.single, color: .red)
+                .strikethrough(.double, color: .blue)
+        }
+        
+        let sut2 = NSAttributedString {
+            RText("Test")
+                .strikethrough(.double, color: .blue)
+                .underline(.single, color: .red)
+        }
+        
+        #expect(sut1.isEqual(to: sut2), "Underline and strikethrough order should not matter")
+    }
+}
+
+#endif // !os(watchOS)

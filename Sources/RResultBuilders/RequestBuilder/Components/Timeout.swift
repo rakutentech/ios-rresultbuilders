@@ -1,14 +1,13 @@
 //
-//  File.swift
-//  File
+//  Timeout.swift
 //
-//  Created by Mahadevaiah, Pavan | Pavan | ECMPD on 2021/08/31.
+//  Created by Pavan on 2021/08/31.
 //
 
 import Foundation
 
 /// Injects timeout interval for request
-public struct Timeout: SessionParameter {
+public struct Timeout: RequestParameter, SessionParameter {
     private let timeout: TimeInterval
     
     /// Initialize with timeout value
@@ -16,6 +15,12 @@ public struct Timeout: SessionParameter {
         self.timeout = timeout
     }
     
+    // Apply to the URLRequest directly
+    public func buildParameter(_ request: inout URLRequest) {
+        request.timeoutInterval = timeout
+    }
+    
+    // Apply to the session configuration
     public func buildConfiguration(_ configuration: URLSessionConfiguration) {
         configuration.timeoutIntervalForRequest = timeout
     }

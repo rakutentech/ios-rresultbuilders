@@ -1,15 +1,25 @@
 //
 //  RSAttributedStringBuilderTests.swift
-//  
 //
+//  Migrated to Swift Testing
 //
 
 #if !os(watchOS)
-import XCTest
+import Testing
+import Foundation
 @testable import RResultBuilders
 
-final class RAttributedStringBuilderTests: XCTestCase {
-    func testInitWithTwoAText() {
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+@Suite("NSAttributedString Builder Tests")
+struct RAttributedStringBuilderTests {
+    
+    @Test("Two text components can be combined")
+    func testInitWithTwoAText() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello world")
             mas.append(NSAttributedString(string: " with Swift"))
@@ -21,10 +31,12 @@ final class RAttributedStringBuilderTests: XCTestCase {
             RText(" with Swift")
         }
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData.string == "Hello world with Swift", "Combined text should match")
     }
     
-    func testInitWithBoldFontAndColor() {
+    @Test("Bold font and color can be applied to ranges")
+    func testInitWithBoldFontAndColor() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello Swift world!")
             mas.addAttribute(.font, value: RFont.boldSystemFont(ofSize: 10), range: NSMakeRange(0, 10))
@@ -38,10 +50,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
                 .foregroundColor(.red, range: NSMakeRange(10, 5))
         }
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithFont() {
+    @Test("Multiple font ranges can be applied")
+    func testInitWithFont() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello Swift world!")
             mas.addAttribute(.font, value: RFont.boldSystemFont(ofSize: 10), range: NSMakeRange(0, 10))
@@ -55,10 +68,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
                 .font(.systemFont(ofSize: 40), range: NSMakeRange(10, 5))
         }
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithColor() {
+    @Test("Multiple color ranges can be applied")
+    func testInitWithColor() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "Hello Swift world!")
             mas.addAttribute(.foregroundColor, value: RColor.red, range: NSMakeRange(0, 10))
@@ -72,10 +86,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
                 .foregroundColor(.blue, range: NSMakeRange(10, 5))
         }
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithTextAndLink() {
+    @Test("Text and link can be combined")
+    func testInitWithTextAndLink() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "")
             mas.append(NSAttributedString(string: "Here is a link to ",
@@ -91,10 +106,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
             RLink("Apple", url: URL(string: "https://www.apple.com")!)
         }
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testStrikeAndUnderline() {
+    @Test("Strikethrough and underline can be applied")
+    func testStrikeAndUnderline() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "")
             mas.append(NSAttributedString(string: "This is a strike and",
@@ -112,10 +128,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
         }
         .font(.systemFont(ofSize: 40))
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testStrikeAndUnderlinePartially() {
+    @Test("Strikethrough and underline can be applied to ranges")
+    func testStrikeAndUnderlinePartially() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "This is a strike and  underline")
             mas.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, 10))
@@ -130,10 +147,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
         }
         .font(.systemFont(ofSize: 40))
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithShadow() {
+    @Test("Shadow can be applied to text")
+    func testInitWithShadow() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "This string is having a shadow")
             let shadow = NSShadow()
@@ -150,27 +168,29 @@ final class RAttributedStringBuilderTests: XCTestCase {
         }
         .font(.systemFont(ofSize: 40))
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithStroke() {
+    @Test("Stroke can be applied to text")
+    func testInitWithStroke() async throws {
         let testData: NSAttributedString = {
-            let mas = NSMutableAttributedString(string: "I love swift and SwiftUI ???")
+            let mas = NSMutableAttributedString(string: "I love swift and SwiftUI ❤️")
             mas.addAttributes([.strokeWidth: 2, .strokeColor: RColor.red], range: NSMakeRange(0, mas.length))
             return mas.font(.systemFont(ofSize: 50))
         }()
         
         let dslData = NSAttributedString {
-            RText("I love swift and SwiftUI ???")
+            RText("I love swift and SwiftUI ❤️")
                 .stroke(width: 2, color: .red)
         }
         .font(.systemFont(ofSize: 50))
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
     #if !os(watchOS)
-    func testInitWithTextAndIcon() {
+    @Test("Text and icon can be combined")
+    func testInitWithTextAndIcon() async throws {
         let folderIcon = RImage()
         
         let testData: NSAttributedString = {
@@ -180,15 +200,7 @@ final class RAttributedStringBuilderTests: XCTestCase {
             attachment.image = folderIcon
             
             let size = CGSize(width: 50, height: 50)
-            let aspectRatio = folderIcon.size.width / folderIcon.size.height
-            var newSize = size
-            if size.width > size.height {
-                newSize.height = size.width / aspectRatio
-            } else {
-                newSize.width = size.height * aspectRatio
-            }
-            
-            attachment.bounds.size = newSize
+            attachment.bounds.size = size
             let attachmentString = NSAttributedString(attachment: attachment)
             
             mas.append(attachmentString)
@@ -206,11 +218,13 @@ final class RAttributedStringBuilderTests: XCTestCase {
         .font(.systemFont(ofSize: 50))
         
         // Looks like NSTextAttachment equality does not work hence comparing raw string instead
-        XCTAssertTrue(dslData.string == testData.string, "DSL string should be same as test data")
+        #expect(dslData.string == testData.string, "DSL string should be same as test data")
+        #expect(dslData.string.contains("Folder"), "Should contain text")
     }
     #endif
     
-    func testInitWithOptional() {
+    @Test("Optional values can be used in builder")
+    func testInitWithOptional() async throws {
         let optionalText: String? = "iPhone12 upgrade is optional"
         
         let testData: NSAttributedString = {
@@ -227,11 +241,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
         }
         .font(.systemFont(ofSize: 40))
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithSwitchStatements() {
-        
+    @Test("Switch statements work in builder")
+    func testInitWithSwitchStatements() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "This is iPhone")
             return mas.font(.systemFont(ofSize: 40))
@@ -254,11 +268,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
         }
         .font(.systemFont(ofSize: 40))
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithLogicalStatement() {
-        
+    @Test("Logical statements work in builder")
+    func testInitWithLogicalStatement() async throws {
         let testData: NSAttributedString = {
             let mas = NSMutableAttributedString(string: "4 is even number")
             return mas.font(.systemFont(ofSize: 40))
@@ -271,11 +285,11 @@ final class RAttributedStringBuilderTests: XCTestCase {
         }
         .font(.systemFont(ofSize: 40))
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
     
-    func testInitWithRawValues() {
-        
+    @Test("Raw string values can be used with modifiers")
+    func testInitWithRawValues() async throws {
         let testData: NSAttributedString = {
             var mas = NSAttributedString(string: "Function Builder awesome")
             mas = mas.font(.systemFont(ofSize: 40))
@@ -288,8 +302,217 @@ final class RAttributedStringBuilderTests: XCTestCase {
                 .foregroundColor(.red)
         }
         
-        XCTAssertTrue(dslData == testData, "DSL string should be same as test data")
+        #expect(dslData == testData, "DSL string should be same as test data")
     }
 }
 
-#endif
+// MARK: - Control Flow Tests
+@Suite("NSAttributedString Builder Control Flow")
+struct AttributedStringControlFlowTests {
+    
+    @Test("Nil optional produces empty result")
+    func testNilOptional() async throws {
+        let optionalText: String? = nil
+        
+        let dslData = NSAttributedString {
+            if let text = optionalText {
+                RText(text)
+            } else {
+                RText("Fallback text")
+            }
+        }
+        
+        #expect(dslData.string == "Fallback text", "Should use fallback text")
+    }
+    
+    @Test("Switch with multiple cases", arguments: [
+        ("iPhone", "This is iPhone"),
+        ("mac", "This is Mac"),
+        ("airpod", "This is AirPod")
+    ])
+    func testSwitchWithMultipleCases(device: String, expected: String) async throws {
+        enum Apple {
+            case iPhone
+            case mac
+            case airpod
+        }
+        
+        let appleDevice: Apple
+        switch device {
+        case "iPhone": appleDevice = .iPhone
+        case "mac": appleDevice = .mac
+        default: appleDevice = .airpod
+        }
+        
+        let dslData = NSAttributedString {
+            switch appleDevice {
+            case .iPhone:
+                RText("This is iPhone")
+            case .mac:
+                RText("This is Mac")
+            case .airpod:
+                RText("This is AirPod")
+            }
+        }
+        
+        #expect(dslData.string == expected, "Should match device text")
+    }
+    
+    @Test("For loop can be used in builder")
+    func testForLoop() async throws {
+        let items = ["Swift", "Kotlin", "Rust"]
+        
+        let dslData = NSAttributedString {
+            for item in items {
+                RText(item)
+                RSpace()
+            }
+        }
+        
+        #expect(dslData.string.contains("Swift"), "Should contain Swift")
+        #expect(dslData.string.contains("Kotlin"), "Should contain Kotlin")
+        #expect(dslData.string.contains("Rust"), "Should contain Rust")
+    }
+    
+    @Test("Complex nested conditionals work")
+    func testNestedConditionals() async throws {
+        let showTitle = true
+        let showSubtitle = true
+        
+        let dslData = NSAttributedString {
+            if showTitle {
+                RText("Title")
+                    .font(.boldSystemFont(ofSize: 20))
+                
+                if showSubtitle {
+                    RLineBreak()
+                    RText("Subtitle")
+                        .font(.systemFont(ofSize: 14))
+                }
+            }
+        }
+        
+        #expect(dslData.string.contains("Title"), "Should contain title")
+        #expect(dslData.string.contains("Subtitle"), "Should contain subtitle")
+    }
+}
+
+// MARK: - Range-Based Modifier Tests
+@Suite("NSAttributedString Range-Based Modifiers")
+struct AttributedStringRangeTests {
+    
+    @Test("Font can be applied to specific ranges")
+    func testFontRanges() async throws {
+        let text = "Hello World Swift"
+        let dslData = NSAttributedString {
+            RText(text)
+                .font(.boldSystemFont(ofSize: 20), range: NSMakeRange(0, 5))
+                .font(.systemFont(ofSize: 14), range: NSMakeRange(6, 5))
+        }
+        
+        // Verify first range has bold font
+        let firstAttr = dslData.attributes(at: 0, effectiveRange: nil)
+        let firstFont = firstAttr[.font] as? RFont
+        #expect(firstFont != nil, "First range should have font")
+        
+        // Verify second range has different font
+        let secondAttr = dslData.attributes(at: 6, effectiveRange: nil)
+        let secondFont = secondAttr[.font] as? RFont
+        #expect(secondFont != nil, "Second range should have font")
+    }
+    
+    @Test("Color can be applied to specific ranges")
+    func testColorRanges() async throws {
+        let text = "Red Green Blue"
+        let dslData = NSAttributedString {
+            RText(text)
+                .foregroundColor(.red, range: NSMakeRange(0, 3))
+                .foregroundColor(.green, range: NSMakeRange(4, 5))
+                .foregroundColor(.blue, range: NSMakeRange(10, 4))
+        }
+        
+        let firstColor = dslData.attributes(at: 0, effectiveRange: nil)[.foregroundColor] as? RColor
+        let secondColor = dslData.attributes(at: 4, effectiveRange: nil)[.foregroundColor] as? RColor
+        let thirdColor = dslData.attributes(at: 10, effectiveRange: nil)[.foregroundColor] as? RColor
+        
+        #expect(firstColor == .red, "First range should be red")
+        #expect(secondColor == .green, "Second range should be green")
+        #expect(thirdColor == .blue, "Third range should be blue")
+    }
+    
+    @Test("Multiple attributes can be applied to overlapping ranges")
+    func testOverlappingRanges() async throws {
+        let text = "Hello World"
+        let dslData = NSAttributedString {
+            RText(text)
+                .font(.boldSystemFont(ofSize: 20), range: NSMakeRange(0, 5))
+                .foregroundColor(.red, range: NSMakeRange(0, 11))
+                .underline(.single, range: NSMakeRange(6, 5))
+        }
+        
+        // First range should have both font and color
+        let firstAttr = dslData.attributes(at: 0, effectiveRange: nil)
+        #expect(firstAttr[.font] != nil, "Should have font")
+        #expect(firstAttr[.foregroundColor] != nil, "Should have color")
+        
+        // Second range should have color and underline
+        let secondAttr = dslData.attributes(at: 6, effectiveRange: nil)
+        #expect(secondAttr[.foregroundColor] != nil, "Should have color")
+        #expect(secondAttr[.underlineStyle] != nil, "Should have underline")
+    }
+}
+
+// MARK: - Link and Attachment Tests
+@Suite("NSAttributedString Links and Attachments")
+struct AttributedStringLinksTests {
+    
+    @Test("Multiple links can be created")
+    func testMultipleLinks() async throws {
+        let dslData = NSAttributedString {
+            RLink("Apple", url: URL(string: "https://apple.com")!)
+            RSpace()
+            RLink("Google", url: URL(string: "https://google.com")!)
+        }
+        
+        #expect(dslData.string.contains("Apple"), "Should contain Apple")
+        #expect(dslData.string.contains("Google"), "Should contain Google")
+        
+        // Verify first link
+        let firstAttr = dslData.attributes(at: 0, effectiveRange: nil)
+        let firstLink = firstAttr[.link] as? URL
+        #expect(firstLink?.absoluteString == "https://apple.com", "First link should be Apple")
+    }
+}
+
+// MARK: - String Literal Tests
+@Suite("NSAttributedString String Literals")
+struct AttributedStringLiteralsTests {
+    
+    @Test("String literals work as components")
+    func testStringLiteral() async throws {
+        let dslData = NSAttributedString {
+            "Hello"
+            " "
+            "World"
+        }
+        
+        #expect(dslData.string == "Hello World", "String literals should concatenate")
+    }
+    
+    @Test("String literals can have modifiers")
+    func testStringLiteralWithModifiers() async throws {
+        let dslData = NSAttributedString {
+            "Styled Text"
+                .font(.boldSystemFont(ofSize: 20))
+                .foregroundColor(.red)
+        }
+        
+        #expect(dslData.string == "Styled Text", "Should contain text")
+        
+        let attributes = dslData.attributes(at: 0, effectiveRange: nil)
+        #expect(attributes[.font] != nil, "Should have font")
+        #expect(attributes[.foregroundColor] != nil, "Should have color")
+    }
+}
+
+#endif // !os(watchOS)
