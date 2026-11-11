@@ -34,10 +34,9 @@
 
 ## <a name="requirements" /> Requirements
 
-- iOS 11.0+
-- macOS 10.11+
-- watchOS 4.0+
-- Xcode 12.5+
+- iOS 15.0+
+- watchOS 8.0+
+- Xcode 16+ (Swift 6.2)
 
 
 ## <a name="installation" /> Installation
@@ -372,7 +371,7 @@ Distributed under the MIT license. See  [LICENSE][license-url] for more informat
 [license-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/master/LICENSE
 [contiribute-url]: https://github.com/rakutentech/ios-rresultbuilders/blob/master/CONTRIBUTING.md
 [pod-image]: https://img.shields.io/badge/pod-v1.0.0-blue
-[platform-image]: https://img.shields.io/badge/Platform-iOS11.0%2B%20%7C%20macOS%2010.11%2B%20%7C%20watchOS%204.0%2B-orange
+[platform-image]: https://img.shields.io/badge/Platform-iOS15.0%2B%20%7C%20watchOS%208.0%2B-orange
 [xcode-image]: https://img.shields.io/badge/Xcode-12.5+-blue.svg
 [spm-image]: https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg
 [bitrise-build-status]: https://app.bitrise.io/app/bb96d52540c9e3ea.svg?token=yt1Mv147hXKe4v9FznfLNQ&branch=master

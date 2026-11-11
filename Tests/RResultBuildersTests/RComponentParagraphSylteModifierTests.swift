@@ -9,8 +9,6 @@ import Foundation
 
 #if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
 #endif
 
 @Suite("NSAttributedString Paragraph Style Modifiers")
@@ -237,7 +235,6 @@ struct RAttributedComponentParagraphModifierTests {
     }
     
     @Test("Multiple paragraph style modifiers can be chained")
-    @available(iOS 9.0, macOS 10.11, *)
     func testChaining() async throws {
         let sut = NSAttributedString {
             RText("Hello world")
@@ -275,7 +272,6 @@ struct RAttributedComponentParagraphModifierTests {
     }
     
     @Test("Chained modifiers produce same result regardless of order")
-    @available(iOS 9.0, macOS 10.11, *)
     func testRandomChainingOrderEqualness() async throws {
         let sut1 = NSAttributedString {
             RText("Hello world")
@@ -447,7 +443,6 @@ struct ParagraphStyleEdgeCaseTests {
 struct ParagraphStyleCompatibilityTests {
     
     @Test("All modifiers can be applied together without conflicts")
-    @available(iOS 9.0, macOS 10.11, *)
     func testAllModifiersCombined() async throws {
         let sut = NSAttributedString {
             RText("Comprehensive test")

@@ -5,23 +5,20 @@
 
 #if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
 #endif
 
 public enum Ligature: Int {
     case none = 0
     case `default` = 1
-    
-    #if canImport(AppKit)
-    case all = 2 // Value 2 is unsupported on iOS
-    #endif
 }
 
 // MARK: - Helpers
 extension RAttributedComponent {
     var allAttributes: RAttributes {
         let attributedString = self.attributedString
+        // Empty attributed strings have no valid index to query attributes at;
+        // requesting index 0 traps with NSRangeException (out of bounds).
+        guard attributedString.length > 0 else { return [:] }
         return attributedString.attributes(at: 0,
                                            longestEffectiveRange: nil,
                                            in: NSRange(location: 0, length: attributedString.length))
@@ -127,10 +124,4 @@ extension RAttributedComponent {
     public func writingDirection(_ writingDirection: NSWritingDirection, range: NSRange? = nil) -> RAttributedComponent {
         return apply([.writingDirection: writingDirection.rawValue], range: range)
     }
-    
-    #if canImport(AppKit)
-    public func vertical(range: NSRange? = nil) -> RAttributedComponent {
-        return apply([.verticalGlyphForm: 1], range: range)        
-    }
-    #endif
 }

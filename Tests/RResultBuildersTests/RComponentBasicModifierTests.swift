@@ -10,8 +10,6 @@ import Foundation
 
 #if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
 #endif
 
 @Suite("NSAttributedString Basic Modifiers")
@@ -355,26 +353,6 @@ struct RComponentBasicModifierTests {
         
         #expect(sut.isEqual(to: testData), "Writing direction should be applied correctly")
     }
-    
-    #if canImport(AppKit)
-    @Test("Vertical glyph form can be applied")
-    func testModifyVertical() async throws {
-        let testData: NSAttributedString = {
-            let mas = NSMutableAttributedString(string: "Hello world",
-                                                attributes: [.verticalGlyphForm: 1])
-            mas.append(NSAttributedString(string: " with Swift"))
-            return mas
-        }()
-        
-        let sut = NSAttributedString {
-            RText("Hello world")
-                .vertical()
-            RText(" with Swift")
-        }
-        
-        #expect(sut.isEqual(to: testData), "Vertical glyph form should be applied correctly")
-    }
-    #endif
     
     @Test("All modifiers can be chained together")
     func testChaining() async throws {

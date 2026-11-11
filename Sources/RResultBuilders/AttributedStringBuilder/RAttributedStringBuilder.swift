@@ -5,8 +5,6 @@
 
 #if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
 #endif
 
 /// RAttributedStringBuilder is `resultBuilder` which helps in building attributed strings in declarative way
