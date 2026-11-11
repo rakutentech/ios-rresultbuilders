@@ -139,7 +139,7 @@ public struct Request<T: Decodable & Sendable>: Sendable {
     /// Useful for streaming large responses
     /// - Throws: RError if request fails or status code is invalid
     /// - Returns: AsyncSequence of bytes
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @available(iOS 15.0, watchOS 8.0, *)
     public func bytes() async throws -> (URLSession.AsyncBytes, URLResponse) {
         let request = asURLRequest()
         let session = URLSession(

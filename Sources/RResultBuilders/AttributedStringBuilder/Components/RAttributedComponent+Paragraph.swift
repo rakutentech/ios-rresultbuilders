@@ -5,8 +5,6 @@
 
 #if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
 #endif
 
 // MARK: - Paragraph Style Modifiers
